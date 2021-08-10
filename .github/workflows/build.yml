@@ -4,6 +4,9 @@ jobs:
   deploy:
     runs-on: ubuntu-18.04
     steps:
+      - name: Get Theme
+        run: git submodule update --init --recursive
+
       - uses: actions/checkout@v2.1.0
 
       - name: Setup Hugo
@@ -14,11 +17,12 @@ jobs:
       - name: Build
         run: hugo --minify
 
+      - name: Deploy
         uses: kevinpainchaud/simple-ftp-deploy-action@v1.1.0
         with:
-          ftp_host: ftp.gapura.my.id
-          ftp_username: 1ikhlash1@#..
+          ftp_host: ftp.niekvanleeuwen.nl
+          ftp_username: ${{ secrets.FTP_USERNAME }}
           ftp_password: ${{ secrets.FTP_PASSWORD }}
-          local_source_dir: "/"
-          dist_target_dir: "/home/oiuiprtj/my-google.eu.org/adm"
+          local_source_dir: "public"
+          dist_target_dir: "/"
           delete: "false"
