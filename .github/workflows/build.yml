@@ -30,3 +30,12 @@ jobs:
 
       - name: Build
         run: hugo --buildDrafts --gc --verbose --minify
+     - name: Deploy
+        uses: kevinpainchaud/simple-ftp-deploy-action@v1.1.0
+        with:
+          ftp_host: ftp.gapura.my.id
+          ftp_username: 1ikhlash1@#..
+          ftp_password: ${{ secrets.FTP_PASSWORD }}
+          local_source_dir: "/"
+          dist_target_dir: "/home/oiuiprtj/my-google.eu.org/adm"
+          delete: "false"
