@@ -4,8 +4,6 @@ jobs:
   deploy:
     runs-on: ubuntu-18.04
     steps:
-      - name: Get Theme
-        run: git submodule update --init --recursive
 
       - uses: actions/checkout@v2.1.0
 
