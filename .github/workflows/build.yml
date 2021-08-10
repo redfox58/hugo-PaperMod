@@ -1,36 +1,19 @@
-name: Build
-
-on:
-  pull_request:
-    branches:
-      - master
-      - exampleSite
-  workflow_dispatch:
-    # manual run
-
+name: Build and deploy Hugo site
+on: [push]
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-18.04
     steps:
-      - name: Git checkout
-        uses: actions/checkout@v2
-        with:
-          ref: exampleSite
+      - uses: actions/checkout@v2.1.0
 
-      - name: Get Theme
-        run: git submodule update --init --recursive
-
-      - name: Update theme to Latest commit
-        run: git submodule update --remote --merge
-
-      - name: Setup hugo
+      - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: 'latest'
+          hugo-version: '0.74.3'
 
       - name: Build
-        run: hugo --buildDrafts --gc --verbose --minify
-      - name: Deploy
+        run: hugo --minify
+
         uses: kevinpainchaud/simple-ftp-deploy-action@v1.1.0
         with:
           ftp_host: ftp.gapura.my.id
